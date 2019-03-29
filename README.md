@@ -1,6 +1,6 @@
 # _Doctor Lookup_
 
-#### _A web application that a list of doctors in the area, Created 03/29/2019_
+#### _A web application that shows a list of doctors in the area, Created 03/29/2019_
 
 #### By _**Yulia Shidlovskaya**_
 
