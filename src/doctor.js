@@ -10,7 +10,7 @@ export class Doctor
 
   addPractice(practice)
   {
-    this.parcticies.push(practice);
+    this.practices.push(practice);
   }
 }
 

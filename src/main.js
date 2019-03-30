@@ -27,8 +27,11 @@ console.log(1);
     else {
       console.log("call function");
       clearPreviousSearch();
-      let hasData = searchDoctors(lat, lon, name, conditions, showDoctor, showError);
+      let hasData = searchDoctors(lat, lon, name, conditions, showDoctors, showError);
+      console.log(hasData);
       if (hasData){
+        $(".results").prepend("<h2>Search results</h2>");
+        console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         $(".results").show();
       }
       else {
@@ -38,16 +41,41 @@ console.log(1);
   });
 
   function showDoctors(allDoctors){
+    let htmlString = "";
+    for(let i=0; i < allDoctors.length; i++)
+    {
+      htmlString += "<div class='row'>";
+      htmlString += "<div class='col-md-4'><img src='" + allDoctors[i].imageUrl + "' alt='photo'></div>";
+      htmlString += "<div class='col-md-8'><h3>" + allDoctors[i].firstName + " " + allDoctors[i].lastName + "</h3>";
+      htmlString += "</div></div>";
 
-    let htmlString = "<tr>";
-    htmlString += "<th>" + lastName + "</th>";
-    htmlString += "<th>" + firstName + "</th>";
-    htmlString += "<th>" + address + "</th>";
-    htmlString += "<th>" + phoneNumber + "</th>";
-    htmlString += "<th>" + website + "</th>";
-    htmlString += "<th>" + newPatients + "</th>";
-    htmlString += "</tr>";
-    //$(".doctor").append(htmlString);
+
+      for(let k=0; k < allDoctors[i].practices.length; k++)
+      {
+        htmlString += "<div class='row'>";
+        htmlString += "<div class='col-md-4'>";
+        htmlString += "<p>Practice name:<br>Address:<br>Phones:<br>Accepts new patients:</p>"
+        htmlString += "</div>";
+
+        htmlString += "<div class='col-md-8'>";
+        htmlString += "<p>" + allDoctors[i].practices[k].name + "<br>";
+        htmlString += allDoctors[i].practices[k].address + "<br>";
+
+        for(let j=0; j < allDoctors[i].practices[k].phones.length; j++)
+        {
+          htmlString += allDoctors[i].practices[k].phones[j] + " ";
+        }
+        htmlString += "<br>";
+        htmlString += allDoctors[i].practices[k].newPatients + "<br>";
+        htmlString += "</p></div>"; // column
+        htmlString += "</div>"; // row
+      }
+
+      htmlString += "<hr>";
+
+    }
+    $(".results").append(htmlString);
+    $(".results").show();
   }
 
   function clearPreviousSearch()

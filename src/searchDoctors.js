@@ -20,31 +20,31 @@ console.log(response);
       if(response.data.length > 0){
         allDoctors = [];
 
-
+        let newDoctor;
         let address = "";
         let data;
         for(let i=0; i < response.data.length; i++)
         {
           data = response.data[i];
           newDoctor = new Doctor(data.profile.last_name, data.profile.first_name, data.profile.image_url);
+          console.log(newDoctor);
           allDoctors.push(newDoctor);
-
           let newPractice;
           let address;
-          for(let k=0; k < data.practicies.length; k++)
+          for(let k=0; k < data.practices.length; k++)
           {
             let address = data.practices[k].visit_address.street + " " +   data.practices[k].visit_address.city + " " + data.practices[k].visit_address.state + " " +
             data.practices[k].visit_address.zip;
             newPractice = new Practice(data.practices[k].name, address, data.practices[k].accepts_new_patients);
 
-            for(let j=0; j < response.data[i].practices[0].phones.length; j++)
+            for(let j=0; j < data.practices[k].phones.length; j++)
             {
               newPractice.addPhone(data.practices[k].phones[j].number);
             }
-
             newDoctor.addPractice(newPractice);
           }
         }
+        console.log(allDoctors);
         showDoctors(allDoctors);
         return true;
       }
