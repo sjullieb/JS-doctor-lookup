@@ -52,7 +52,6 @@ $(document).ready(function() {
     }
 
     if (allDoctors.length == 0){
-      console.log("no data");
       $(".noData").show();
     }
     else {
@@ -127,7 +126,7 @@ $(document).ready(function() {
 
   function showError(error)
   {
-    $(".errors").text(error);
+    $(".errors").text(`There was an error processing your request: ${error.responseText}. Please try again.`);
     $(".errors").show();
   }
 

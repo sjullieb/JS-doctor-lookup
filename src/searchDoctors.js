@@ -14,13 +14,11 @@ export function searchDoctors(location_lat, location_lon, name, condition, pageN
     nameQuery = `name=${name}&`;
   if (condition != "")
     conditionQuery = `query=${condition}&`;
-console.log(`https://api.betterdoctor.com/2016-03-01/doctors?`+ conditionQuery + nameQuery + `location=${location_lat}%2C${location_lon}%2C100&user_location=${location_lat}%2C${location_lon}&skip=0&limit=10&user_key=${process.env.apiKey}`);
-  $.get(`https://api.betterdoctor.com/2016-03-01/doctors?`+ conditionQuery + nameQuery + `location=${location_lat}%2C${location_lon}%2C100&user_location=${location_lat}%2C${location_lon}&skip=${skip}&limit=${perPage}&user_key=${process.env.apiKey}`).then(function(response){
+  $.get(`https://api.etterdoctor.com/2016-03-01/doctors?`+ conditionQuery + nameQuery + `location=${location_lat}%2C${location_lon}%2C100&user_location=${location_lat}%2C${location_lon}&skip=${skip}&limit=${perPage}&user_key=${process.env.apiKey}`).then(function(response){
       allDoctors = [];
       if(response.data.length > 0){
         changePreviousNumberOfDoctorsOnPage(response.data.length);
         let newDoctor;
-        let address = "";
         let data;
         for(let i=0; i < response.data.length; i++)
         {
@@ -32,7 +30,7 @@ console.log(`https://api.betterdoctor.com/2016-03-01/doctors?`+ conditionQuery +
           let newPatients;
           for(let k=0; k < data.practices.length; k++)
           {
-            let address = data.practices[k].visit_address.street + " " +   data.practices[k].visit_address.city + " " + data.practices[k].visit_address.state + " " +
+            address = data.practices[k].visit_address.street + " " +   data.practices[k].visit_address.city + " " + data.practices[k].visit_address.state + " " +
             data.practices[k].visit_address.zip;
 
           //  console.log(data.practices[k].accepts_new_patients);
@@ -45,7 +43,7 @@ console.log(`https://api.betterdoctor.com/2016-03-01/doctors?`+ conditionQuery +
             {
               newPatients = "No";
             }
-            
+
             newPractice = new Practice(data.practices[k].name, address, newPatients);
 
             for(let j=0; j < data.practices[k].phones.length; j++)
@@ -55,10 +53,8 @@ console.log(`https://api.betterdoctor.com/2016-03-01/doctors?`+ conditionQuery +
             newDoctor.addPractice(newPractice);
           }
         }
-        console.log(allDoctors);
       }
       showDoctors(allDoctors);
-      //
 
     }).fail(function(error){
       showError(error);
