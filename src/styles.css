@@ -2,13 +2,10 @@ body {
   background-color: #7FDBFF;
 }
 
-.col-md-2, .col-md-3, .col-md-1{
-  border: solid 1px;
+h2{
+  text-align: center;
 }
 
-#tableHeader{
-  text-align: center;
-  font-weight: bold;
-  /*vertical-align: middle;*/
+.noData{
   display: none;
 }

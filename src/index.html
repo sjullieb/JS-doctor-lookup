@@ -8,14 +8,23 @@
     <div class="container">
 
       <form id="newSearch">
-        <p>Enter search parameters:</p>
+        <h2>Doctors lookup</h2>
+        <h4>Enter search parameters</h4>
+        <br>
         <label for="name">Doctor's name</label>
         <input id="name" type="text" name="name" value="">
         <label for="conditions">Conditions</label>
         <input id="conditions" type="text" name="conditions" value="sore throat">
         <button type="submit" name="button">Search</button>
+        <br>
       </form>
-
+      <br>
+      <div class="buttons">
+        <button type="button" id="previous" name="button">Previous page</button>
+        <button type="button" id="next" name="button">Next page</button>
+        <br>
+      </div>
+      <br>
       <div class="results">
         <!-- <tr>
           <th>Last name<th>
@@ -25,12 +34,9 @@
           <th>Website<th>
           <th>Accept new patient<th>
         </tr> -->
-        <div class="doctors">
-
-        </div>
       </div>
       <div class="noData">
-        <p>Sorry... No data found!</p>
+        <h4>Sorry... No data found!</h4>
       </div>
       <div class="errors">
       </div>
