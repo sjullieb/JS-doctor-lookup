@@ -1,9 +1,10 @@
 export class Doctor
 {
-  constructor(firstName, lastName)
+  constructor(firstName, lastName, imageUrl)
   {
     this.firstName = firstName;
     this.lastName = lastName;
+    this.imageUrl = imageUrl;
     this.practices = [];
   }
 

@@ -1,9 +1,11 @@
 import $ from 'jquery';
 import { Doctor, Practice } from './doctor.js';
 
+export let allDoctors = [];
+
 //format for location: 47.6130071%2C-122.4121035%2C100 - Seattle
 
-export function searchDoctors(location_lat, location_lon, name, condition, showDoctor, showError){
+export function searchDoctors(location_lat, location_lon, name, condition, showDoctors, showError){
   //process.env.API_KEY
   let nameQuery = ``;
   let conditionQuery = ``;
@@ -16,17 +18,34 @@ console.log(`https://api.betterdoctor.com/2016-03-01/doctors?`+ conditionQuery +
 
 console.log(response);
       if(response.data.length > 0){
-      //   let address = "";
-      //   for(let i=0; i < response.data.length; i++){
-      //     let address = response.data[i].practices[0].visit_address.street + " " +   response.data[i].practices[0].visit_address.city + " " + response.data[i].practices[0].visit_address.state + " " +
-      //     response.data[i].practices[0].visit_address.zip;
-      //
-      //     let phone = "";
-      //     for(let j=0; j < response.data[i].practices[0].phones.length; j++)
-      //       phone += response.data[i].practices[0].phones[j].number + " ";
-      //     showDoctor(response.data[i].profile.last_name, response.data[i].profile.first_name,
-      //       phone, address, response.data[i].practices[0].accept_new_patients);
-      //   }
+        allDoctors = [];
+
+
+        let address = "";
+        let data;
+        for(let i=0; i < response.data.length; i++)
+        {
+          data = response.data[i];
+          newDoctor = new Doctor(data.profile.last_name, data.profile.first_name, data.profile.image_url);
+          allDoctors.push(newDoctor);
+
+          let newPractice;
+          let address;
+          for(let k=0; k < data.practicies.length; k++)
+          {
+            let address = data.practices[k].visit_address.street + " " +   data.practices[k].visit_address.city + " " + data.practices[k].visit_address.state + " " +
+            data.practices[k].visit_address.zip;
+            newPractice = new Practice(data.practices[k].name, address, data.practices[k].accepts_new_patients);
+
+            for(let j=0; j < response.data[i].practices[0].phones.length; j++)
+            {
+              newPractice.addPhone(data.practices[k].phones[j].number);
+            }
+
+            newDoctor.addPractice(newPractice);
+          }
+        }
+        showDoctors(allDoctors);
         return true;
       }
       else {

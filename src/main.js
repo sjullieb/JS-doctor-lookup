@@ -2,8 +2,8 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
 import $ from 'jquery';
-import { searchDoctors } from './searchDoctors.js';
-import { Doctor, Practice } form './doctor.js';
+import { searchDoctors, allDoctors } from './searchDoctors.js';
+import { Doctor, Practice } from './doctor.js';
 
 // Seattle location
 // 47.6130071 -122.4121035
@@ -37,7 +37,8 @@ console.log(1);
     }
   });
 
-  function showDoctor(lastName, firstName, address, phoneNumber, website, newPatients){
+  function showDoctors(allDoctors){
+
     let htmlString = "<tr>";
     htmlString += "<th>" + lastName + "</th>";
     htmlString += "<th>" + firstName + "</th>";
@@ -46,7 +47,7 @@ console.log(1);
     htmlString += "<th>" + website + "</th>";
     htmlString += "<th>" + newPatients + "</th>";
     htmlString += "</tr>";
-    $(".doctor").append(htmlString);
+    //$(".doctor").append(htmlString);
   }
 
   function clearPreviousSearch()
