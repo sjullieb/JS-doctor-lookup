@@ -14,7 +14,7 @@ export function searchDoctors(location_lat, location_lon, name, condition, pageN
     nameQuery = `name=${name}&`;
   if (condition != "")
     conditionQuery = `query=${condition}&`;
-  $.get(`https://api.etterdoctor.com/2016-03-01/doctors?`+ conditionQuery + nameQuery + `location=${location_lat}%2C${location_lon}%2C100&user_location=${location_lat}%2C${location_lon}&skip=${skip}&limit=${perPage}&user_key=${process.env.apiKey}`).then(function(response){
+  $.get(`https://api.betterdoctor.com/2016-03-01/doctors?`+ conditionQuery + nameQuery + `location=${location_lat}%2C${location_lon}%2C100&user_location=${location_lat}%2C${location_lon}&skip=${skip}&limit=${perPage}&user_key=${process.env.apiKey}`).then(function(response){
       allDoctors = [];
       if(response.data.length > 0){
         changePreviousNumberOfDoctorsOnPage(response.data.length);
@@ -30,10 +30,7 @@ export function searchDoctors(location_lat, location_lon, name, condition, pageN
           let newPatients;
           for(let k=0; k < data.practices.length; k++)
           {
-            address = data.practices[k].visit_address.street + " " +   data.practices[k].visit_address.city + " " + data.practices[k].visit_address.state + " " +
-            data.practices[k].visit_address.zip;
-
-          //  console.log(data.practices[k].accepts_new_patients);
+            address = data.practices[k].visit_address.street + " " + data.practices[k].visit_address.city + " " + data.practices[k].visit_address.state + " " + data.practices[k].visit_address.zip;
 
             if(data.practices[k].accepts_new_patients.toString() == "true")
             {

@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
 import $ from 'jquery';
 import { searchDoctors, allDoctors } from './searchDoctors.js';
-import { Doctor, Practice } from './doctor.js';
+//import { Doctor, Practice } from './doctor.js';
 
 // Seattle location
 // 47.6130071 -122.4121035
@@ -80,8 +80,8 @@ $(document).ready(function() {
           }
           htmlString += "<br>";
           htmlString += allDoctors[i].practices[k].newPatients + "<br>";
-          htmlString += "</p></div>"; // column
-          htmlString += "</div>"; // row
+          htmlString += "</p></div>";
+          htmlString += "</div>";
         }
 
         htmlString += "<hr>";
