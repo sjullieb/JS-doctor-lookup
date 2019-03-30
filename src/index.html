@@ -9,22 +9,28 @@
       <p>Enter search parameters:</p>
       <label for="name">Doctor's name</label>
       <input id="name" type="text" name="name" value="">
-      <label for="symptom">Symptoms:</label>
-      <input id="symptom" type="text" name="symptom" value="">
+      <label for="conditions">Conditions</label>
+      <input id="conditions" type="text" name="conditions" value="sore throat">
       <button type="submit" name="button">Search</button>
     </form>
 
     <div class="results">
       <tr>
-        <td>First Name<td>
-        <td>Last Name<td>
-        <td>Address<td>
-        <td>Phone number<td>
-        <td>Website<td>
-        <td>New patient<td>
+        <th>Last name<th>
+        <th>First name<th>
+        <th>Address<th>
+        <th>Phone number<th>
+        <th>Website<th>
+        <th>Accept new patient<th>
       </tr>
+      <div class="doctors">
+
+      </div>
     </div>
-    <div id="errors">
+    <div class="noData">
+      <p>Sorry... No data found!</p>
+    </div>
+    <div class="errors">
     </div>
   </body>
 </html>
