@@ -2,7 +2,8 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
 import $ from 'jquery';
-import { searchDoctors } from './doctors.js';
+import { searchDoctors } from './searchDoctors.js';
+import { Doctor, Practice } form './doctor.js';
 
 // Seattle location
 // 47.6130071 -122.4121035

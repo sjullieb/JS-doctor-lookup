@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import { Doctor, Practice } from './doctor.js';
 
 //format for location: 47.6130071%2C-122.4121035%2C100 - Seattle
 
