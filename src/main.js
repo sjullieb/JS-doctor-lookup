@@ -2,8 +2,8 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
 import $ from 'jquery';
-import { searchDoctors, allDoctors } from './searchDoctors.js';
-//import { Doctor, Practice } from './doctor.js';
+import { DoctorService } from './searchDoctors.js';
+import { Doctor, Practice } from './doctor.js';
 
 // Seattle location
 // 47.6130071 -122.4121035
@@ -15,6 +15,7 @@ let perPage = 10;
 let previousNumberOnPage = 0;
 let name;
 let conditions;
+let allDoctors = [];
 
 $(document).ready(function() {
 
@@ -35,10 +36,64 @@ $(document).ready(function() {
       $("#name").focus();
     }
     else {
-      clearPreviousSearch();
-      searchDoctors(lat, lon, name, conditions, pageNumber, perPage, showDoctors, showError, changePreviousNumberOfDoctorsOnPage);
+      startSearch();
     }
   });
+
+  function startSearch(){
+    clearPreviousSearch();
+    let doctors = new DoctorService();
+    let promise = doctors.searchDoctors(lat, lon, name, conditions, pageNumber, perPage, showDoctors);
+
+    promise.then(function(response){
+      let body = JSON.parse(response);
+
+      allDoctors = [];
+console.log(body);
+      console.log("length" + body.data.length);
+      if(body.data.length > 0){
+        changePreviousNumberOfDoctorsOnPage(body.data.length);
+        let newDoctor;
+        let data;
+        for(let i=0; i < body.data.length; i++)
+        {
+          data = body.data[i];
+          newDoctor = new Doctor(data.profile.last_name, data.profile.first_name, data.profile.image_url);
+console.log(newDoctor);
+          allDoctors.push(newDoctor);
+          let newPractice;
+          let address;
+          let newPatients;
+          for(let k=0; k < data.practices.length; k++)
+          {
+            address = data.practices[k].visit_address.street + " " + data.practices[k].visit_address.city + " " + data.practices[k].visit_address.state + " " + data.practices[k].visit_address.zip;
+
+            if(data.practices[k].accepts_new_patients.toString() == "true")
+            {
+              newPatients = "Yes";
+            }
+            else
+            {
+              newPatients = "No";
+            }
+
+            newPractice = new Practice(data.practices[k].name, address, newPatients);
+
+            for(let j=0; j < data.practices[k].phones.length; j++)
+            {
+              newPractice.addPhone(data.practices[k].phones[j].number);
+            }
+            newDoctor.addPractice(newPractice);
+          }
+        }
+      }
+      console.log(allDoctors);
+      showDoctors(allDoctors);
+    }, function(error) {
+      console.log(error);
+      showError(error);
+    });
+  }
 
   function showDoctors(allDoctors){
     let htmlString = "";
@@ -96,8 +151,7 @@ $(document).ready(function() {
     if(previousNumberOnPage == perPage){
       $("#previous").prop("disabled",false);
       pageNumber++;
-      clearPreviousSearch();
-      searchDoctors(lat, lon, name, conditions, pageNumber, perPage, showDoctors, showError, changePreviousNumberOfDoctorsOnPage);
+      startSearch();
     }
   });
 
@@ -111,8 +165,7 @@ $(document).ready(function() {
       else {
         $("#previous").prop("disabled",false);
       }
-      clearPreviousSearch();
-      searchDoctors(lat, lon, name, conditions, pageNumber, perPage, showDoctors, showError, changePreviousNumberOfDoctorsOnPage);
+      startSearch();
     }
   });
 
